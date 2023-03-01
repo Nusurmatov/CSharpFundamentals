@@ -1,0 +1,158 @@
+// Problem 1: Ages
+Console.Clear();
+
+int num = Convert.ToInt32(Console.ReadLine());
+
+if (num >= 0 && num < 3)
+	Console.Write("baby");
+else if (num >= 3 && num < 14)
+	Console.Write("child");
+else if (num >= 14 && num < 20)
+	Console.Write("teenager");
+else if (num >= 20 && num < 66)
+	Console.Write("adult");
+else if (num >= 66)
+	Console.Write("elder");
+
+
+// Problem 2: Division
+Console.Clear();
+
+int num = Convert.ToInt32(Console.ReadLine());
+
+if (num % 10 == 0)
+	Console.Write("The number is divisible by 10");
+else if (num % 7 == 0)
+	Console.Write("The number is divisible by 7");
+else if (num % 6 == 0)
+	Console.Write("The number is divisible by 6");
+else if (num % 3 == 0)
+	Console.Write("The number is divisible by 3");
+else if (num % 2 == 0)
+	Console.Write("The number is divisible by 2");
+else
+	Console.Write("Not divisible");
+
+
+// Problem 3: Vacation
+Console.Clear();
+
+int count = Convert.ToInt32(Console.ReadLine());
+string type = Console.ReadLine().ToLower(); 
+string day = Console.ReadLine().ToLower();
+decimal price = 0.0m;
+
+switch (type)
+{
+    case "students":
+        switch (day)
+        {
+            case "friday":
+                price = 8.45m;
+                break;
+            case "saturday":
+                price = 9.80m;
+                break;
+            case "sunday":
+                price = 10.46m;
+                break;
+        }
+
+        price *= count >= 30 ? (0.85m * count) : count;  
+        break;
+    case "business":
+        switch (day)
+        {
+            case "friday":
+                price = 10.90m;
+                break;
+            case "saturday":
+                price = 15.60m;
+                break;
+            case "sunday":
+                price = 16m;
+                break;
+        }
+
+        count -= count >= 100 ? 10 : 0;
+        price *= count; 
+        break;
+    case "regular":
+        switch (day)
+        {
+            case "friday":
+                price = 15m;
+                break;
+            case "saturday":
+                price = 20m;
+                break;
+            case "sunday":
+                price = 22.50m;
+                break;
+        }
+        
+        price *= (count >= 10 && count <= 20) ? (0.95m * count) : count;  
+        break;
+}
+
+Console.Write($"Total price: {price:0.00}");
+
+
+// Problem 5: Login
+Console.Clear();
+
+var username = Console.ReadLine().Trim();
+var spelled = username.ToCharArray();
+Array.Reverse(spelled);
+var password = new string(spelled);
+int attempt = 0;
+do
+{
+    var input = Console.ReadLine();
+    attempt++;
+
+    if (input.Equals(password))
+    {
+        Console.WriteLine($"User {username} logged in.");
+        break;
+    }
+    else
+    {
+        if (attempt == 4)
+        {
+            Console.WriteLine($"User {username} blocked!");
+            break;
+        }
+
+        Console.WriteLine("Incorrect password. Try again.");
+    }
+
+} while (attempt < 4);
+
+
+// Problem 6: Strong Number
+Console.Clear();
+
+int Factorial(int n)
+{
+    int f = 1;
+
+    for (int i = 1; i <= n; i++)
+    {
+        f *= i;   
+    }
+
+    return f;
+}
+
+string num = Console.ReadLine();
+int sum = 0;
+
+for (int i = 0; i < num.Length; i++)
+{
+    sum += Factorial(num[i] - 48);
+}
+
+Console.Write(int.Parse(num) != sum ? "no" : "yes");
+
+
