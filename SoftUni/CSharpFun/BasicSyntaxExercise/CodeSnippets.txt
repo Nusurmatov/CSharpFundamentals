@@ -156,3 +156,82 @@ for (int i = 0; i < num.Length; i++)
 Console.Write(int.Parse(num) != sum ? "no" : "yes");
 
 
+// Problem 7: Vending Machine
+Console.Clear();
+
+string? input = Console.ReadLine();
+decimal sum = 0.0m;
+var validCoins = new HashSet<decimal> { 0.1m, 0.2m, 0.5m, 1m,  2m }; 
+var products = new Dictionary<string, decimal>() {
+    { "Nuts", 2.0m },
+    { "Water", 0.7m },
+    { "Crisps", 1.5m },
+    { "Soda", 0.8m },
+    { "Coke", 1.0m },
+};
+
+while (true)
+{
+    if (input.Equals("Start"))
+    {
+        break;
+    }
+    var money = Decimal.Parse(input);
+    if (validCoins.Contains(money))
+    {
+        sum += money;
+    }
+    else
+    {
+        Console.WriteLine("Cannot accept {0}", money);    
+    }
+
+    input = Console.ReadLine();
+}
+
+input = Console.ReadLine();
+while (true)
+{
+    if (input.Equals("End"))
+    {
+        break;
+    }
+
+    if (products.ContainsKey(input))
+    {
+        if (sum >= products[input])
+        {
+            Console.WriteLine("Purchased {0}", input.ToLower());
+            sum -= products[input];
+        }
+        else
+        {
+            Console.WriteLine("Sorry, not enough money");
+        }
+    }
+    else
+    {
+        Console.WriteLine("Invalid product");   
+    }
+
+    input = Console.ReadLine();
+}
+
+Console.WriteLine("Change: {0:0.00}", sum);
+
+
+// Problem 8: Triangle of Numbers
+Console.Clear();
+
+int n = int.Parse(Console.ReadLine());
+
+for (int i = 1; i <= n; i++)
+{
+    for (int j = 0; j < i; j++)
+    {
+        Console.Write($"{i} ");
+    }
+    Console.WriteLine();
+}
+
+

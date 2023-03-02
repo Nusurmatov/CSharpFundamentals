@@ -1,24 +1,13 @@
-﻿// Problem 6: Strong Number
+﻿// Problem 9: Padawan Equipment
 Console.Clear();
 
-int Factorial(int n)
-{
-    int f = 1;
+int n = int.Parse(Console.ReadLine());
 
-    for (int i = 1; i <= n; i++)
+for (int i = 1; i <= n; i++)
+{
+    for (int j = 0; j < i; j++)
     {
-        f *= i;   
+        Console.Write($"{i} ");
     }
-
-    return f;
+    Console.WriteLine();
 }
-
-string num = Console.ReadLine();
-int sum = 0;
-
-for (int i = 0; i < num.Length; i++)
-{
-    sum += Factorial(num[i] - 48);
-}
-
-Console.Write(int.Parse(num) != sum ? "no" : "yes");
