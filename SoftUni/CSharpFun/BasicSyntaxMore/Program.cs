@@ -1,47 +1,22 @@
 ﻿// Problem 5: Messages
 Console.Clear();
 
-var input = Console.ReadLine();
-var inputSpelled = input.ToCharArray();
-Array.Reverse(inputSpelled);
+int count = int.Parse(Console.ReadLine());
+var stBuilder = new System.Text.StringBuilder();
 
-Console.WriteLine(new string(inputSpelled));
+while (count > 0)
+{
+    var input = Console.ReadLine();
 
-// var games = new Dictionary<string, float>() {
-//     { "OutFall 4", 39.99f },
-//     { "CS: OG", 15.99f },
-//     { "Zplinter Zell", 19.99f },
-//     { "Honored 2", 59.99f },
-//     { "RoverWatch", 29.99f },
-//     { "RoverWatch Origins Edition", 39.99f },
-// };
+    int length = input.Length;
+    int mainDigit = input[0] - 48;
+    int offset =(mainDigit - 2) * 3;
+    offset += mainDigit < 8 ? 0: 1;
+    int letterIndex = offset + length - 1;
 
-// var money = float.Parse(Console.ReadLine());
-// float spent = 0.0f;
-// var input = Console.ReadLine();
+    stBuilder.Append(mainDigit != 0 ? (char)(letterIndex + 97) : ' ');
 
-// while (input != "Game Time" && input != null)
-// {
-//     if (games.ContainsKey(input))
-//     {
-//         if (money >= games[input])
-//         {
-//             money -= games[input];
-//             spent += games[input];
-//             Console.WriteLine("Bought {0}", input);
-//         }
-//         else
-//         {
-//             Console.WriteLine("Too Expensive");
-//         }    
-//     }
-//     else
-//     {
-//         Console.WriteLine("Not Found");
-//     }
+    count--;
+}
 
-//     input = Console.ReadLine();
-// }
-
-// Console.WriteLine(money != 0.0f ? $"Total spent: {spent:c2}. Remaining: {money:c2}" : 
-//                                    "Out of money!");
+Console.Write(stBuilder);
