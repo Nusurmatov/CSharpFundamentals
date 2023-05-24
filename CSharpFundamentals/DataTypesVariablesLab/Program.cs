@@ -1,20 +1,15 @@
-﻿// Problem 5 - Special Numbers. A number is special when its sum of digits is 5, 7 or 11.
-int n = Convert.ToInt32(Console.ReadLine());
-
-for (int i = 1; i <= n; i++)
+﻿// Problem 12 - Refactor Special Numbers:
+int number = int.Parse(Console.ReadLine());
+for (int i = 1; i <= number; i++)
 {
-    Console.WriteLine($"{i} -> {isSpecial(i)}");
-}
-
-bool isSpecial(int number)
-{
-    int sum = 0;
-
-    while (number > 0)
+    int tempNumber = i;
+    int sumOfNumberDigits = 0;
+    while (tempNumber > 0)
     {
-        sum += number % 10;
-        number /= 10;
+        sumOfNumberDigits += tempNumber % 10;
+        tempNumber = tempNumber / 10;
     }
-
-    return sum == 5 || sum == 7 || sum == 11;
+    bool isSpecialNum = (sumOfNumberDigits == 5) || (sumOfNumberDigits == 7) || (sumOfNumberDigits == 11);
+    Console.WriteLine("{0} -> {1}", i, isSpecialNum);
+    sumOfNumberDigits = 0;
 }
