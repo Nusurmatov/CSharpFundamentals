@@ -1,18 +1,32 @@
-﻿// Problem 7 - Water Overflow:
+﻿// Problem 11 - Snowballs:
 
-short n = Convert.ToInt16(Console.ReadLine());
-short currentQuantity = 0;
-for (short i = 0; i < n; i++)
+using System.Numerics;
+
+int n = Convert.ToInt32(Console.ReadLine());
+var snowballs = new List<SnowBall>();
+
+for (int i = 0; i < n; i++)
 {
-    short liters = Convert.ToInt16(Console.ReadLine());
-    if (liters > 255)
+    int snowballSnow = Convert.ToInt32(Console.ReadLine());
+    int snowballTime = Convert.ToInt32(Console.ReadLine());
+    int snowballQuality = Convert.ToInt32(Console.ReadLine());
+    BigInteger snowballValue = Pow(snowballSnow / snowballTime, snowballQuality);
+    var snowball = new SnowBall(snowballSnow, snowballTime, snowballQuality, snowballValue); 
+
+    snowballs.Add(snowball);
+}
+var maxSnowBall = snowballs.MaxBy(s => s.snowballValue);
+Console.WriteLine($"{maxSnowBall.snowballSnow} : {maxSnowBall.snowballTime} = {maxSnowBall.snowballValue} ({maxSnowBall.snowballQuality})");
+
+BigInteger Pow(int n, int power)
+{
+    BigInteger result = 1;
+    for (int i = 0; i < power; i++)
     {
-        Console.WriteLine("Insufficient capacity!");
+        result *= n;
     }
-    else
-    {
-        currentQuantity += liters;
-    }
+
+    return result;
 }
 
-Console.Write(currentQuantity);
+record SnowBall(int snowballSnow, int snowballTime, int snowballQuality, BigInteger snowballValue);
