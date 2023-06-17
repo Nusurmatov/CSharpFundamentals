@@ -22,7 +22,7 @@ for (int i = n - 1; i >= 0; i--)
 
 // Problem 3: Rounding Numbers: 
 var numbers = Console.ReadLine().Split().Select(double.Parse).ToList();
-numbers.ForEach(number => Console.WriteLine($"{number} => {Math.Round(number, MidpointRounding.AwayFromZero)}"));
+numbers.ForEach(number => Console.WriteLine($"{number} => {(int)Math.Round(number, MidpointRounding.AwayFromZero)}"));
 
 
 // Problem 4: Reverse Array of strings: 
