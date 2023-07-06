@@ -1,0 +1,17 @@
+// Problem 4 - Tribonacci Sequence:
+using System.Numerics;
+
+int n = Convert.ToInt32(Console.ReadLine());
+List<BigInteger> sequence = GetTribonacciSequence(n);
+Console.Write(string.Join(' ', sequence.Take(n)));
+
+List<BigInteger> GetTribonacciSequence(int n)
+{
+    List<BigInteger> result = new List<BigInteger>() {1, 1, 2};
+    for (int i = 0; i < n - 3; i++)
+    {
+        result.Add(result[i] + result[i+1] + result[i+2]);
+    }
+
+    return result;
+}

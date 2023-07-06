@@ -1,0 +1,287 @@
+// Problem 1 - Smallest Of Three Numbers
+int a = ReadInt();
+int b = ReadInt();
+int c = ReadInt();
+int minOfThree = Min(a, b, c);
+Console.Write(minOfThree);
+
+int Min(int a, int b, int c) => Math.Min(Math.Min(a, b), c);
+
+int ReadInt() => Convert.ToInt32(Console.ReadLine());
+
+
+// Problem 2 - Vovels Count:
+var input = Console.ReadLine();
+Console.Write(CountVovels(input));
+
+int CountVovels(string input) => input.ToLower().Count(c => "aeiou".Contains(c));
+
+
+// Problem 3 - Characters In Range:
+char a = ReadChar();
+char b = ReadChar();
+PrintCharsBetween(a, b);
+
+void PrintCharsBetween(char a, char b)
+{
+    for (int i = Math.Min(a, b) + 1; i < Math.Max(a, b); i++)
+    {
+        Console.Write("{0} ", (char)i);
+    }
+}
+
+char ReadChar() => Convert.ToChar(Console.ReadLine());
+
+
+// Problem 4 - Password Validator:
+var password = Console.ReadLine();
+ValidatePassowrd(password);
+
+void ValidatePassowrd(string password)
+{
+    bool isValid = true;
+    if (!ValidatePasswordLength(password.Length))
+    {
+        isValid = false;
+        Console.WriteLine("Password must be between 6 and 10 characters");        
+    }   
+    if (!ValidatePasswordForCharacters(password)) 
+    {
+        isValid = false;
+        Console.WriteLine("Password must consist only of letters and digits");
+    } 
+    if (!ValidatePasswordForDigits(password))
+    {
+        isValid = false;
+        Console.WriteLine("Password must have at least 2 digits");
+    }
+
+    if (isValid)
+    {
+        Console.WriteLine("Password is valid");
+    }
+}
+
+bool ValidatePasswordLength(int passwordLength) => passwordLength >= 6 && passwordLength <= 10;
+
+bool ValidatePasswordForCharacters(string password) => password.All(c => Char.IsLetter(c) || Char.IsDigit(c));
+
+bool ValidatePasswordForDigits(string password) => password.Count(c => Char.IsDigit(c)) >= 2;
+
+
+// Problem 5 - Add and Subtract:
+int x = ReadInt();
+int y = ReadInt();
+int z = ReadInt();
+Console.Write(x.Add(y).Subtract(z));
+
+int ReadInt() => Convert.ToInt32(Console.ReadLine());
+
+static class MyMath
+{
+    public static int Add(this int x, int y) => x + y;
+    public static int Subtract(this int x, int y) => x -y;
+}
+
+
+var input = Console.ReadLine();
+PrintMiddleChars(input);
+
+void PrintMiddleChars(string? input) => 
+    Console.Write(input.Length % 2 == 1 ? input[input.Length/2]: input[(input.Length/2-1)..(input.Length/2+1)]);
+
+
+// Problem 7 - NxN Matrix;
+int n = Convert.ToInt32(Console.ReadLine());
+PrintNxNMatrix(n);
+
+void PrintNxNMatrix(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        Console.WriteLine(string.Join(' ', Enumerable.Repeat(n, n)));
+    }
+}
+
+
+// Problem 8 - Factorial Division:
+int a = Convert.ToInt32(Console.ReadLine());
+int b = Convert.ToInt32(Console.ReadLine());
+Console.Write("{0:f2}", a.Factorial() / b.Factorial());
+
+static class MyMath
+{
+
+    public static double Factorial(this int x)
+    {
+        if (x < 0)
+            throw new ArgumentException($"The argument must be non-negative: {x}");
+
+        if (x == 1 || x == 0)
+            return 1;
+
+        return x * Factorial(x-1);
+    }
+}
+
+
+// Problem 9 - Palindrome Integers:
+var input = Console.ReadLine();
+while (input.Trim() != "END")
+{
+    Console.WriteLine(IsPalindrome(input).ToString().ToLower());    
+    input = Console.ReadLine();
+}
+
+bool IsPalindrome(string input)
+{
+    for (int i = 0; i < input.Length / 2; i++)
+    {
+        if (input[i] != input[^(i+1)])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+// Problem 10 - Top Number:
+int n = Convert.ToInt32(Console.ReadLine());
+PrintTopNumbers(n);
+
+void PrintTopNumbers(int n)
+{
+    for (int i = 17; i <= n; i++)
+    {
+        if (IsSumOfDigitsDivisibleByEight(i) && HasAnyOddDigit(i))
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+
+bool IsSumOfDigitsDivisibleByEight(int x) => x.ToString().Sum(c => c - 48) % 8 == 0;
+
+bool HasAnyOddDigit(int x) => x.ToString().Any(c => c % 2 == 1);
+
+
+// Problem 11 - Array Manipulator:
+int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+var command = Console.ReadLine().Split();
+
+while (command[0] != "end")
+{
+    switch (command[0])
+    {
+        case "max":
+            ExecuteMaxCommand(command[1]);
+            break;
+        case "min":
+            ExecuteMinCommand(command[1]);
+            break;
+        case "first":
+            ExecuteFirstCommand(int.Parse(command[1]), command[2]);
+            break;
+        case "last":
+            ExecuteLastCommand(int.Parse(command[1]), command[2]);
+            break;
+        default: 
+            ExecuteExchangeCommand(int.Parse(command[1]));
+            break;
+    }   
+    command = Console.ReadLine().Split(); 
+}
+Console.Write("[{0}]", string.Join(", ", numbers));
+
+void ExecuteMaxCommand(string evenOrOdd) 
+{
+    if (evenOrOdd == "even")
+    {
+        Func<int, bool> evenCheck = n => n % 2 == 0;
+        Console.WriteLine(numbers.Any(evenCheck) ? numbers.ToList().LastIndexOf(numbers.Where(evenCheck).Max()):
+                                                  "No matches");
+    }
+    else
+    {
+        Func<int, bool> oddCheck = n => n % 2 == 1;
+        Console.WriteLine(numbers.Any(oddCheck) ? numbers.ToList().LastIndexOf(numbers.Where(oddCheck).Max()):
+                                                  "No matches");
+    }
+}
+
+void ExecuteMinCommand(string evenOrOdd)
+{
+    if (evenOrOdd == "even")
+    {
+        Func<int, bool> evenCheck = n => n % 2 == 0;
+        Console.WriteLine(numbers.Any(evenCheck) ? numbers.ToList().LastIndexOf(numbers.Where(evenCheck).Min()):
+                                                  "No matches");
+    }
+    else
+    {
+        Func<int, bool> oddCheck = n => n % 2 == 1;
+        Console.WriteLine(numbers.Any(oddCheck) ? numbers.ToList().LastIndexOf(numbers.Where(oddCheck).Min()):
+                                                  "No matches");
+    }
+}
+
+void ExecuteFirstCommand(int count, string evenOrOdd)
+{
+    if (count > numbers.Length)
+    {
+        Console.WriteLine("Invalid count");
+    }
+    else
+    {
+        if (evenOrOdd == "even")
+        {
+            Func<int, bool> evenCheck = n => n % 2 == 0;
+            Console.WriteLine("[{0}]", string.Join(", ", numbers.Where(evenCheck).Take(count))); 
+
+        }
+        else
+        {
+            Func<int, bool> oddCheck = n => n % 2 == 1;
+            Console.WriteLine("[{0}]", string.Join(", ", numbers.Where(oddCheck).Take(count)));
+        }
+    }
+}
+
+void ExecuteLastCommand(int count, string evenOrOdd)
+{
+    if (count > numbers.Length)
+    {
+        Console.WriteLine("Invalid count");
+    }
+    else
+    {
+        if (evenOrOdd == "even")
+        {
+            Func<int, bool> evenCheck = n => n % 2 == 0;
+            List<int> evens = numbers.Any(evenCheck) ? numbers.Where(evenCheck).ToList() : new();
+            var result = count < evens.Count ? evens.Skip(evens.Count - count) : evens.Take(count);
+            Console.WriteLine("[{0}]", string.Join(", ", result)); 
+        }
+        else
+        {
+            Func<int, bool> oddCheck = n => n % 2 == 1;
+            List<int> odds = numbers.Any(oddCheck) ? numbers.Where(oddCheck).ToList() : new();
+            var result = count < odds.Count ? odds.Skip(odds.Count - count) : odds.Take(count);
+            Console.WriteLine("[{0}]", string.Join(", ", result)); 
+        }
+    }
+}
+
+void ExecuteExchangeCommand(int index) 
+{
+    if (index >= numbers.Length || index < 0)
+    {
+        Console.WriteLine("Invalid index");
+    }
+    else
+    {
+        numbers = numbers.Skip(index + 1).Concat(numbers.Take(index + 1)).ToArray();
+    }
+}

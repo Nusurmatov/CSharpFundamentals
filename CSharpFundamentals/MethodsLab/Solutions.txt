@@ -1,0 +1,169 @@
+// Problem 1 - Sign of Integer Numbers:
+int number = Convert.ToInt32(Console.ReadLine());
+string signOfNumber = number > 0 ? "positive" : number < 0 ? "negative" : "zero";
+
+Console.WriteLine($"The number {number} is {signOfNumber}.");
+
+
+// Problem 2 - Grades:
+double grade = Convert.ToDouble(Console.ReadLine());
+string assessment = AssessGrade(grade);
+Console.Write(assessment);
+
+string AssessGrade(double grade) => grade switch
+{
+    >= 2.00  and <= 2.99 => "Fail",
+    >= 3.00 and <= 3.49 => "Poor",
+    >= 3.50 and <= 4.49 => "Good",
+    >= 4.50 and <= 5.49 => "Very good",
+    _ => "Excellent"
+};
+
+
+// Problem 3 - Calculations:
+var command = Console.ReadLine();
+int a = Convert.ToInt32(Console.ReadLine());
+int b = Convert.ToInt32(Console.ReadLine());
+Calculate(command, a, b);
+
+void Calculate(string? command, int a, int b)
+{
+    int result = command switch 
+    {
+        "add" => a + b,
+        "subtract" => a - b,
+        "multiply" => a * b,
+        _ => a / b
+    };
+
+    Console.Write(result);
+}
+
+
+// Problem 4 - Printing Triangle:
+int n = Convert.ToInt32(Console.ReadLine());
+
+for (int i = 1; i <= n; i++)
+{
+    PrintLine(1, i);
+}
+
+for (int i = n - 1; i > 0; i--)
+{
+    PrintLine(1, i);
+}
+
+void PrintLine(int start, int end)
+{
+    for (int i = start; i <= end; i++)
+    {
+        Console.Write($"{i} ");
+    }
+    Console.WriteLine();
+}
+
+
+// Problem 5 - Orders:
+var order = Console.ReadLine();
+int quantity = Convert.ToInt32(Console.ReadLine());
+Console.Write("{0:f2}", GetPriceOfOrder(order, quantity));
+
+double GetPriceOfOrder(string? order, int quantity) => order switch
+{
+    "coffee" => quantity * 1.50,
+    "coke" => quantity * 1.40,
+    "snacks" => quantity * 2.00,
+    _ => quantity * 1.00
+};
+
+
+// Problem 6 - Calculate Rectangle Area:
+double width = Convert.ToDouble(Console.ReadLine());
+double height = Convert.ToDouble(Console.ReadLine());
+double area = GetRectangleArea(width, height);
+Console.WriteLine(area);
+
+double GetRectangleArea(double width, double height) => width * height;
+
+
+// Problem 7 - Repeating String:
+var input = Console.ReadLine();
+int times = Convert.ToInt32(Console.ReadLine());
+var repeatedInput = RepeatString(input, times);
+Console.Write(repeatedInput);
+
+string RepeatString(string? str, int times)
+{
+    var result = new System.Text.StringBuilder(str);
+
+    for (int i = 1; i < times; i++)
+    {
+        result.Append(str);
+    }
+
+    return result.ToString();
+} 
+
+
+// Problem 8 - Math Power:
+double @base = Convert.ToDouble(Console.ReadLine());
+int power = Convert.ToInt32(Console.ReadLine());
+Console.Write(@base.RaiseToPower(power));
+
+static class MyMath
+{
+    public static double RaiseToPower(this double @base, int power) => Math.Pow(@base, power);
+}
+
+
+// Problem 9 - Greater of Two Values:
+internal static class Program
+{
+    private static void Main(string[] args)
+    {
+
+        var dataType = Console.ReadLine();
+        string result = dataType switch
+        {
+            "int" => GetMax(Convert.ToInt32(Console.ReadLine()), Convert.ToInt32(Console.ReadLine())),
+            "char" => GetMax(Convert.ToChar(Console.ReadLine()), Convert.ToChar(Console.ReadLine())).ToString(),
+            _ => GetMax(Console.ReadLine(), Console.ReadLine())
+        };
+        Console.Write(result);
+    }
+
+    static string GetMax(int a, int b) => Math.Max(a, b).ToString();
+
+    static string GetMax(string? a, string? b) => a[0] > b[0] ? a : b;
+
+    static char GetMax(char a, char b) => a > b ? a : b;
+
+}
+
+
+// Problem 10 - Multiply Evens By Odds:
+var n = Console.ReadLine();
+int result = GetMultipleOfEvenAndOdds(n[0] != '-' ? n : n[1..]);
+Console.Write(result);
+
+int GetMultipleOfEvenAndOdds(string n) => GetSumOfEvenDigits(n) * GetSumOfOddDigits(n);
+
+int GetSumOfEvenDigits(string n) => n.Where(c => c % 2 == 0).Sum(c => c - 48);
+
+int GetSumOfOddDigits(string n) => n.Where(c => c % 2 == 1).Sum(c => c - 48);
+
+
+// Problem 11 - Math Operations:
+int a = Convert.ToInt32(Console.ReadLine());
+var @operator = Console.ReadLine();
+int b = Convert.ToInt32(Console.ReadLine());
+double result = Calculate(a, @operator, b);
+Console.Write(result);
+
+double Calculate(int a, string? @operator, int b) => @operator switch
+{
+    "+" => a + b,
+    "-" => a - b,
+    "*" => a * b,
+    _ => a / b
+};
