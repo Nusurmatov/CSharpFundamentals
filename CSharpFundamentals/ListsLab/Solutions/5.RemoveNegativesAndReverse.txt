@@ -1,0 +1,4 @@
+// Problem 5 - Remove Negatives and Reverse:
+var numbers = Console.ReadLine().Split().Select(int.Parse).ToList();
+var result = numbers.Where(n => n >= 0).Reverse().ToList();
+Console.Write(result.Count > 0 ? string.Join(' ', result) : "empty");
