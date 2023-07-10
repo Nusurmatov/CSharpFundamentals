@@ -1,0 +1,49 @@
+// Problem 4 - List Operations:
+var numbers = Console.ReadLine().Split().Select(int.Parse).ToList();
+var tokens = Console.ReadLine().Split().ToList();
+
+while (tokens[0] != "End")
+{
+    switch (tokens[0])
+    {
+        case "Remove":
+            int index = int.Parse(tokens[1]);
+            if (IsIndexValid(index))
+                numbers.RemoveAt(index);
+            break;
+        case "Insert":
+            index = int.Parse(tokens[2]);
+            if (IsIndexValid(index))
+                numbers.Insert(index, int.Parse(tokens[1]));
+            break;
+        case "Shift":
+            int count = int.Parse(tokens[2]) % numbers.Count;
+            if (tokens[1] == "right")
+            {
+                numbers = numbers.Skip(numbers.Count - count).Concat(numbers.Take(numbers.Count - count)).ToList();
+            }
+            else
+            {
+                numbers = numbers.Skip(count).Concat(numbers.Take(count)).ToList();
+            }
+            break;
+        default:
+            numbers.Add(int.Parse(tokens[1]));
+            break;
+    }
+
+    tokens = Console.ReadLine().Split().ToList();
+}
+
+bool IsIndexValid(int index)
+{
+    if (index < 0 || index > numbers.Count - 1)
+    {
+        Console.WriteLine("Invalid index");
+        return false;
+    }
+
+    return true;
+}
+
+Console.Write(string.Join(' ', numbers));
