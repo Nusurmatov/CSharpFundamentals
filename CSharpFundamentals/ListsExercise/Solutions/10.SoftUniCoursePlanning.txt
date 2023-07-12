@@ -1,0 +1,56 @@
+// Problem 10 - SoftUni Course Planning:
+List<string> ReadStringList(string splitter = ":") => Console.ReadLine().Split(splitter).ToList();
+var schedule = ReadStringList(splitter: ", ");
+var command = ReadStringList();
+
+string lessonTitle = string.Empty;
+while (command[0] != "course start")
+{
+    lessonTitle = command[1];
+    if (!schedule.Contains(lessonTitle))
+    {
+        switch (command[0])
+        {
+            case "Add":    
+                schedule.Add(lessonTitle);                
+                break;        
+            case "Insert":  
+                schedule.Insert(int.Parse(command[2]), lessonTitle);
+                break;         
+            case "Exercise":
+                schedule.Add($"{lessonTitle}");
+                schedule.Add($"{lessonTitle}-Exercise");
+                break;                
+        }
+    }
+    else
+    {
+        switch (command[0])
+        {
+            case "Remove":        
+                schedule.RemoveAll(lesson => lesson.Contains(lessonTitle));                
+                break;   
+            case "Swap": 
+                string lessonTitle1 = command[2];
+                if (schedule.Contains(lessonTitle1))
+                {
+                    int lesson1Index = schedule.FindIndex(lesson => lesson.Contains(lessonTitle));
+                    int lesson2Index = schedule.FindIndex(lesson => lesson.Contains(lessonTitle1));
+                    var result1 = schedule.Take(lesson1Index);
+                    var result2 = schedule.TakeWhile(lesson => lesson.Contains(lessonTitle1));
+                    var result3 = schedule.Skip(lesson1Index + result2.Count()).SkipWhile(lesson => lesson.Contains(lessonTitle1));
+                    var result4 = schedule.TakeWhile(lesson => lesson.Contains(lessonTitle));
+
+                    schedule = result1.Concat(result2).Concat(result3).Concat(result4).ToList();
+                }
+                break;        
+            case "Exercise":
+                schedule.Insert(schedule.IndexOf(lessonTitle) + 1, $"{lessonTitle}-Exercise");
+                break;        
+        } 
+        }
+    command = ReadStringList();
+}
+
+int i = 0;
+schedule.ForEach(lesson => Console.WriteLine($"{++i}.{lesson}"));
