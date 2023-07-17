@@ -1,4 +1,4 @@
-﻿// Problem 5 - Drum Set:
+// Problem 5 - Drum Set:
 var savings = Convert.ToSingle(Console.ReadLine());
 var initialQuality = Console.ReadLine().Split().Select(int.Parse).ToList();
 var command = Console.ReadLine();

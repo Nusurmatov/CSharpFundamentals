@@ -1,0 +1,16 @@
+// Problem 3 - Take/Skip Rope:
+var encrypted = Console.ReadLine();
+
+var digits = encrypted.Where(c => Char.IsDigit(c));
+var nonDigits = encrypted.Where(c => !Char.IsDigit(c)).ToArray();
+var takeList = digits.Where((d, i) => i % 2 == 0).Select(c => c - 48).ToList();
+var skipList = digits.Where((d, i) => i % 2 == 1).Select(c => c - 48).ToList();
+
+var message = new System.Text.StringBuilder();
+int index = 0;
+for (int i = 0; i < takeList.Count; i++)
+{
+    message.Append(nonDigits[index..(takeList[i] + index)]);
+    index += takeList[i] + skipList[i];
+}
+Console.Write(message);
