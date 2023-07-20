@@ -1,0 +1,25 @@
+// Problem 3 - Songs:
+int n = Convert.ToInt32(Console.ReadLine());
+
+List<Song> album = new();
+while (n-- > 0)
+{
+    var input = Console.ReadLine().Split('_').ToArray();
+    album.Add(new(
+        typeList: input[0],
+        name: input[1],
+        time: input[2]
+    ));
+}
+var typeList = Console.ReadLine();
+switch (typeList)
+{
+    case "all":
+        Console.Write(string.Join("\n", album.Select(song => song.name)));
+        break;
+    default:
+        Console.Write(string.Join("\n", album.Where(song => song.typeList.Equals(typeList)).Select(song => song.name)));
+        break;
+}
+
+record Song(string typeList, string name, string time);

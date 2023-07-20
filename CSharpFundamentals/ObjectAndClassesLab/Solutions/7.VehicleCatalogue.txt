@@ -1,0 +1,60 @@
+// Problem 7 - Vehicle Catalogue:
+var input = Console.ReadLine();
+
+Catalog vehicles = new(new(), new());
+while (input != "end")
+{
+    var tokens = input.Split('/');
+    if (tokens[0].Equals("Car"))
+    {
+        vehicles.Cars.Add(new() {
+           Brand = tokens[1],
+           Model = tokens[2],
+           HorsePower = double.Parse(tokens[3]) 
+        });
+    }
+    else
+    {
+        vehicles.Trucks.Add(new() {
+           Brand = tokens[1],
+           Model = tokens[2],
+           Weight = double.Parse(tokens[3]) 
+        });
+    }
+
+    input = Console.ReadLine();
+}
+if (vehicles.Cars.Count > 0)
+{
+    Console.WriteLine("Cars:");
+    vehicles.Cars.OrderBy(car => car.Brand).ToList().ForEach(car => Console.WriteLine(car));
+}
+if (vehicles.Trucks.Count > 0)
+{
+    Console.WriteLine("Trucks:");
+    vehicles.Trucks.OrderBy(truck => truck.Brand).ToList().ForEach(truck => Console.WriteLine(truck));
+}
+
+record Catalog(List<Car> Cars, List<Truck> Trucks);
+
+abstract class Vehicle
+{
+    public string Brand { get; set; }
+    public string Model { get; set; }
+
+    public override string ToString() => $"{Brand}: {Model}";
+}
+
+class Car : Vehicle
+{
+    public double HorsePower { get; set; }
+
+    public override string ToString() => $"{base.ToString()} - {HorsePower}hp";
+}
+
+class Truck : Vehicle
+{
+    public double Weight { get; set; }
+
+    public override string ToString() => $"{base.ToString()} - {Weight}kg";
+}

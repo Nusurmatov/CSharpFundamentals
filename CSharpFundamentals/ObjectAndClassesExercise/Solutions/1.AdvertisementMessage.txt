@@ -1,0 +1,60 @@
+// Problem 1 - Advertisement Message:
+int n = Convert.ToInt32(Console.ReadLine());
+
+GenerateAdData();
+var randomizer = new Random();
+while (n-- > 0)
+{
+    var phrase = AdMessage.Phrases[randomizer.Next(AdMessage.Phrases.Count)];
+    var @event = AdMessage.Events[randomizer.Next(AdMessage.Events.Count)];
+    var author = AdMessage.Authors[randomizer.Next(AdMessage.Authors.Count)];
+    var city = AdMessage.Cities[randomizer.Next(AdMessage.Cities.Count)];
+
+    Console.WriteLine($"{phrase} {@event} {author} - {city}.");
+}
+
+void GenerateAdData()
+{
+    AdMessage.Phrases.AddRange(new string[]{
+        "Excellent product.", 
+        "Such a great product.", 
+        "I always use that product.", 
+        "Best product of its category.", 
+        "Exceptional product.", 
+        "I can't live without this product."
+    });
+    AdMessage.Events.AddRange(new string[] {
+        "Now I feel good.", 
+        "I have succeeded with this product.", 
+        "Makes miracles. I am happy of the results!", 
+        "I cannot believe but now I feel awesome.", 
+        "Try it yourself, I am very satisfied.", 
+        "I feel great!"
+    });
+    AdMessage.Authors.AddRange(new string[] {
+        "Diana", 
+        "Petya", 
+        "Stella", 
+        "Elena", 
+        "Katya", 
+        "Iva", 
+        "Annie", 
+        "Eva"
+    }); 
+    AdMessage.Cities.AddRange(new string[] {
+        "Burgas", 
+        "Sofia", 
+        "Plovdiv", 
+        "Varna", 
+        "Ruse"
+    });
+}
+
+
+static class AdMessage
+{
+    public static List<string> Phrases { get; set; } = new();
+    public static List<string> Events { get; set; } = new();
+    public static List<string> Authors { get; set; } = new();
+    public static List<string> Cities { get; set; } = new();
+}

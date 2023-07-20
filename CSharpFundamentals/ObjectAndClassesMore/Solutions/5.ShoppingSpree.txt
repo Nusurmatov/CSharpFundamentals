@@ -1,0 +1,57 @@
+// Problem 5 - Shopping Spree:
+char[] splitters = { ';', '=' };
+string[] Read() => Console.ReadLine().Split(splitters, StringSplitOptions.RemoveEmptyEntries);
+
+var input = Read();
+List<Person> people = new();
+for (int i = 0; i < input.Length; i += 2)
+{
+    people.Add(new (input[i], int.Parse(input[i+1])));
+}
+
+input = Read();
+List<Product> products = new();
+for (int i = 0; i < input.Length; i += 2)
+{
+    products.Add(new (input[i], int.Parse(input[i+1])));
+}
+
+var purchase = Console.ReadLine().Split();
+while (purchase[0] != "END")
+{
+    people.Find(person => person.Name.Equals(purchase[0])).BuyProduct(products.Find(product => product.Name.Equals(purchase[1])));
+    purchase = Console.ReadLine().Split();
+}
+people.ForEach(person => Console.WriteLine(person));
+
+class Person
+{
+    public string Name { get; private set; }
+    public int Money { get; private set; }
+    public List<Product> Products { get; private set; } = new();
+
+    public Person(string name, int money)
+    {
+        this.Name = name;
+        this.Money = money;
+    }
+
+    public void BuyProduct(Product product)
+    {
+        if (this.Money < product.Cost)
+        {
+            Console.WriteLine($"{Name} can't afford {product.Name}");
+        }
+        else
+        {
+            this.Money -= product.Cost;
+            this.Products.Add(product);
+            Console.WriteLine($"{Name} bought {product.Name}");
+        }
+    }
+
+    public override string ToString() => 
+        $"{Name} - {(Products.Count > 0 ? string.Join(", ", Products.Select(product => product.Name)) : "Nothing bought")}";
+}
+
+record Product(string Name, int Cost);

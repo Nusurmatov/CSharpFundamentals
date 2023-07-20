@@ -1,0 +1,59 @@
+// Problem 6 - Vehicle Catalogue:
+var input = Console.ReadLine();
+
+List<Vehicle> catalogue = new();
+while (input != "End")
+{
+    catalogue.Add(new Vehicle(input.Split()));
+    input = Console.ReadLine();
+}
+
+input = Console.ReadLine();
+while (input != "Close the Catalogue")
+{
+    foreach (var vehicle in catalogue)
+        if (vehicle.Model == input)
+            Console.WriteLine(vehicle);
+    input = Console.ReadLine();
+}
+
+foreach (var type in new string[] { "Car", "Truck" })
+{
+    double sum = 0;
+    int count = 0;
+    foreach (var vehicle in catalogue)
+    {
+        if (vehicle.Type.ToLower() == type.ToLower())
+        {
+            sum += vehicle.Horsepower;
+            count++;
+        }
+    }
+    double averageHorsepower = sum / (count != 0 ? count : 1);
+   
+    Console.WriteLine($"{type}s have average horsepower of: {averageHorsepower:f2}.");
+}
+
+class Vehicle
+{
+    public string Type { get; set; }
+    public string Model { get; set; }
+    public string Color { get; set; }
+    public int Horsepower { get; set; }
+
+    public Vehicle(string[] vehicle)
+    {
+        this.Type = vehicle[0].ToLower() == "car" ? "Car" : "Truck";
+        this.Model = vehicle[1];
+        this.Color = vehicle[2];
+        this.Horsepower = int.Parse(vehicle[3]);
+    }
+
+    public override string ToString() => 
+        new System.Text.StringBuilder()
+            .AppendLine($"Type: {this.Type}")
+            .AppendLine($"Model: {this.Model}")
+            .AppendLine($"Color: {this.Color}")
+            .Append($"Horsepower: {this.Horsepower}")
+            .ToString();
+}

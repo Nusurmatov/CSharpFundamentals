@@ -1,0 +1,47 @@
+// Problem 3 - Speed Racing:
+int n = Convert.ToInt32(Console.ReadLine());
+
+List<Car> garage = new();
+while (n-- > 0)
+{
+    garage.Add(new Car(Console.ReadLine().Split()));
+}
+
+var input = Console.ReadLine();
+while (input != "End")
+{
+    var tokens = input.Split();
+    garage.Find(car => car.Model.Equals(tokens[1]))?.Drive(double.Parse(tokens[2]));
+    input = Console.ReadLine();
+}
+garage.ForEach(car => Console.WriteLine(car));
+
+class Car
+{
+    public string Model { get; set; }
+    public double FuelAmount { get; private set; }
+    public double FuelConsumption { get; private set; }
+    public double DistanceTraveled { get; private set; } = 0;
+
+    public Car(string[] car)
+    {
+        this.Model = car[0];
+        this.FuelAmount = double.Parse(car[1]);
+        this.FuelConsumption = double.Parse(car[2]);
+    }
+
+    public void Drive(double distance)
+    {
+        if (FuelAmount < FuelConsumption * distance)
+        {
+            Console.WriteLine("Insufficient fuel for the drive");
+        }
+        else
+        {
+            this.FuelAmount -= FuelConsumption * distance;
+            this.DistanceTraveled += distance;
+        }
+    }
+
+    public override string ToString() => $"{Model} {FuelAmount:f2} {DistanceTraveled}";
+}
