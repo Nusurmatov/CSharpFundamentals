@@ -1,0 +1,112 @@
+// Problem 1: Day of Week
+string[] dayOfWeek = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+if (int.TryParse(Console.ReadLine(), out int n))
+{
+    Console.Write(n > 0 && n <= dayOfWeek.Length ? dayOfWeek[n-1] : "Invalid day!");
+}
+
+// Problem 2: Print Numbers in Reverse Order
+int n = int.Parse(Console.ReadLine());
+int[] numbers = new int[n];
+
+for (int i = 0; i < n; i++)
+{
+    numbers[i] = int.Parse(Console.ReadLine());
+}
+
+for (int i = n - 1; i >= 0; i--)
+{
+    Console.Write($"{numbers[i]} ");
+}
+
+
+// Problem 3: Rounding Numbers: 
+var numbers = Console.ReadLine().Split().Select(double.Parse).ToList();
+numbers.ForEach(number => Console.WriteLine($"{number} => {(int)Math.Round(number, MidpointRounding.AwayFromZero)}"));
+
+
+// Problem 4: Reverse Array of strings: 
+string[] strs = Console.ReadLine().Split();
+Array.Reverse(strs);
+strs.ToList().ForEach(s => Console.Write($"{s} "));
+
+
+// Problem 5: Sum Even Numbers: 
+int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+Console.Write(numbers.Where(number => number % 2 == 0).Sum());
+
+
+// Problem 6: Even or Odd Substraction:
+int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+Console.Write(numbers.Where(n => n % 2 == 0).Sum() - numbers.Where(n => n % 2 == 1).Sum());
+
+/* 
+var even = MakeAdditionExpression(numbers.Where(n => n % 2 == 0).ToArray());
+var odd = MakeAdditionExpression(numbers.Where(n => n % 2 == 1).ToArray());
+Console.WriteLine($"Even: {even.expression}{even.sum}");
+Console.WriteLine($"Odd: {odd.expression}{odd.sum}");
+Console.Write($"Result: {even.sum} - {odd.sum} = {even.sum - odd.sum}");
+
+(string expression, int sum) MakeAdditionExpression(int[] nums)
+{
+    var stringBuilder = new System.Text.StringBuilder();
+    int sum = 0;
+    for (int i = 0; i < nums.Length; i++)
+    {
+        stringBuilder.Append(i < nums.Length - 1 ? $"{nums[i]} + " : $"{nums[i]} = ");
+        sum +=  nums[i];
+    }
+
+    return (stringBuilder.ToString(), sum);
+} 
+Sample Output:
+Even: 2 + 4 + 6 = 12
+Odd: 1 + 3 + 5 = 9
+Result: 12 - 9 = 3
+*/
+
+
+// Problem 7: Equal Arrays
+int[] a = Console.ReadLine().Split().Select(int.Parse).ToArray();
+int[] b = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+bool isIdentical = true;
+int sum = 0;
+for (int i = 0; i < a.Length; i++)
+{
+  if (a[i] != b[i])
+  {
+    isIdentical = false;
+    Console.Write($"Arrays are not identical. Found difference at {i} index");
+    break;
+  }
+  sum += a[i];
+}
+
+if (isIdentical)
+{
+  Console.Write($"Arrays are identical. Sum: {sum}");
+}
+
+
+// Problem 8: Condense Array to Number:
+int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+if (numbers.Length == 1)
+{
+    Console.Write(numbers.First());    
+}
+else
+{
+    int[] condensed = new int[numbers.Length]; 
+
+    for (int i = 0; i < numbers.Length - 2; i++)
+    {
+        for (int j = 0; j < numbers.Length - i - 1; j++)
+        {
+            condensed[j] = numbers[j] + numbers[j+1];
+        }
+        Array.Copy(condensed, numbers, condensed.Length);
+    }
+
+    Console.Write(numbers[0] + numbers[1]);
+}

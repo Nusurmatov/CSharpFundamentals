@@ -1,0 +1,12 @@
+// Problem 1 - Messaging
+var numbers = Console.ReadLine().Split();
+var text = Console.ReadLine().ToCharArray().ToList();
+
+var message = new System.Text.StringBuilder();
+foreach (var number in numbers)
+{
+    int index = number.Sum(c => c - 48) % text.Count;
+    message.Append(text[index]);
+    text.RemoveAt(index);
+}
+Console.Write(message);

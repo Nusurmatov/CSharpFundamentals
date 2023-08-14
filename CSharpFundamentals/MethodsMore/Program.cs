@@ -1,0 +1,23 @@
+﻿// Problem 5 - Multiplication Sign:
+double a = ReadDouble();
+double b = ReadDouble();
+double c = ReadDouble();
+Console.Write(GetMultiplicationSign(a, b, c));
+
+string GetMultiplicationSign(double a, double b, double c) 
+{
+    if (a == 0 || b == 0 || c == 0)
+    {
+        return "zero";
+    }
+
+    int negatives = 0;
+    negatives += a < 0 ? 1 : 0; 
+    negatives += b < 0 ? 1 : 0; 
+    negatives += c < 0 ? 1 : 0;
+
+    return negatives % 2 == 0 ? "positive" : "negative"; 
+}
+    
+
+double ReadDouble() => Convert.ToDouble(Console.ReadLine());

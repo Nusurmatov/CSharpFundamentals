@@ -1,0 +1,35 @@
+// Problem 3 - Longer Line:
+Line line1 = new(ReadDouble(), ReadDouble(), ReadDouble(), ReadDouble());
+Line line2 = new(ReadDouble(), ReadDouble(), ReadDouble(), ReadDouble());
+Line longerLine = CompareLines(line1, line2);
+longerLine = PutPointCloserToCenterFront(longerLine);
+PrintLine(longerLine);
+
+Line PutPointCloserToCenterFront(Line line) 
+{
+    var len1 = FindDistanceBetweenTwoPoints(0, 0, line.x1, line.y1);
+    var len2 = FindDistanceBetweenTwoPoints(0, 0, line.x2, line.y2);
+    if (len2 < len1)
+    {
+        return new Line(line.x2, line.y2, line.x1, line.y1);
+    }
+    else
+    {
+        return line;
+    }
+}
+ 
+Line CompareLines(Line line1, Line line2)
+{
+    var len1 = FindDistanceBetweenTwoPoints(line1.x1, line1.y1, line1.x2, line1.y2);
+    var len2 = FindDistanceBetweenTwoPoints(line2.x1, line2.y1, line2.x2, line2.y2);
+
+    return len2 > len1 ? line2 : line1;
+}
+
+void PrintLine(Line line) => Console.Write($"({line.x1}, {line.y1})({line.x2}, {line.y2})");
+double FindDistanceBetweenTwoPoints(double x1, double y1, double x2, double y2) => 
+    Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
+
+double ReadDouble() => Convert.ToDouble(Console.ReadLine());
+record Line(double x1, double y1, double x2, double y2);

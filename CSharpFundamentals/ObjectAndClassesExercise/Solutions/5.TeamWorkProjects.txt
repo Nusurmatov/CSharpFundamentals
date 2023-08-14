@@ -1,0 +1,81 @@
+// Problem 5 - Teamwork Projects:
+int n = Convert.ToInt32(Console.ReadLine());
+
+List<Team> teams = new();
+while (n-- > 0)
+{
+    var team = new Team(Console.ReadLine().Split('-'));
+    if (teams.Any(t => t.User == team.User))
+    {
+        Console.WriteLine($"{team.User} cannot create another team!"); 
+    }
+    else if (teams.Any(t => t.Name == team.Name))
+    {
+        Console.WriteLine($"Team {team.Name} was already created!");
+    }
+    else
+    {
+        teams.Add(team);
+        Console.WriteLine($"Team {team.Name} has been created by {team.User}!");
+    }
+}
+
+var input = Console.ReadLine();
+while (input != "end of assignment")
+{
+    var tokens = input.Split("->");
+    var teamIndex = teams.FindIndex(t => t.Name.Equals(tokens[1]));
+    if (teamIndex < 0)
+    {
+        Console.WriteLine($"Team {tokens[1]} does not exist!");
+    }
+    else if (teams.Any(team => team.User.Equals(tokens[0]) || team.Members.Contains(tokens[0])))
+    {
+        Console.WriteLine($"Member {tokens[0]} cannot join team {tokens[1]}!");
+    }
+    else
+    {
+        teams[teamIndex].Members.Add(tokens[0]);
+    }
+
+    input = Console.ReadLine();
+}
+
+foreach (var team in teams.Where(t => t.Members.Count > 0).OrderByDescending(t => t.Members.Count).ThenBy(t => t.Name))
+{
+    Console.Write(team);
+}
+Console.WriteLine("Teams to disband:");
+foreach (var team in teams.Where(t => t.Members.Count == 0).OrderBy(t => t.Name))
+{
+    Console.WriteLine(team.Name);
+}
+
+class Team
+{
+    public string User { get; set; }
+    public string  Name { get; set; }
+    public List<string> Members { get; set; } = new();
+
+    public Team(string[] team) : this(team[0], team[1]) {  }
+
+    public Team(string user, string name)
+    {
+        this.User = user;
+        this.Name = name;
+    }
+
+    public override string ToString()
+    {
+        var result = new System.Text.StringBuilder(this.Name);
+        result.AppendLine($"\n- {this.User}");
+
+        this.Members.Sort();
+        foreach (var member in Members)
+        {
+            result.AppendLine($"-- {member}");
+        }
+
+        return result.ToString();
+    }
+}

@@ -1,0 +1,27 @@
+// Problem 4 - Mixed Up Lists:
+List<int> ReadIntList() => Console.ReadLine().Split().Select(int.Parse).ToList();
+
+var numbers1 = ReadIntList();
+var numbers2 = ReadIntList();
+
+int min = int.MinValue, max = int.MaxValue;
+if (numbers1.Count > numbers2.Count)
+{
+    min = Math.Min(numbers1[^1], numbers1[^2]);
+    max = Math.Max(numbers1[^1], numbers1[^2]);
+}
+else if (numbers1.Count < numbers2.Count)
+{
+    min = Math.Min(numbers2[0], numbers2[1]);
+    max = Math.Max(numbers2[0], numbers2[1]);
+}
+else
+{
+    min = Math.Min(numbers1[^1], numbers2[^1]);
+    max = Math.Max(numbers1[^1], numbers2[^1]);
+}
+
+var result = numbers1.Concat(numbers2).Where(n => n > min && n < max).ToList();
+result.Sort();
+
+Console.Write(string.Join(' ', result));

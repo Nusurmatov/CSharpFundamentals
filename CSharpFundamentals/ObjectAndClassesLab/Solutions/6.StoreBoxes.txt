@@ -1,0 +1,37 @@
+// Problem 6 - Store Boxes:
+var input = Console.ReadLine();
+
+List<Box> boxes = new();
+while (input != "end")
+{
+    var tokens = input.Split();
+    Item item = new(Name: tokens[1], Price: decimal.Parse(tokens[3]));
+    Box box = new() {
+        SerialNumber = tokens[0],
+        Item = item,
+        Quantity = int.Parse(tokens[2]),
+        Price = item.Price * int.Parse(tokens[2])
+    };
+    boxes.Add(box);
+
+    input = Console.ReadLine();
+}
+boxes.Sort();
+boxes.Reverse();
+boxes.ForEach(box => Console.WriteLine(box));
+
+record Item(string Name, decimal Price);
+class Box : IComparable<Box>
+{
+    public string SerialNumber { get; set; } 
+    public Item Item { get; set; }  
+    public int Quantity { get; set; } 
+    public decimal Price { get; set; }
+    
+    public int CompareTo(Box? other) => Price > other.Price ? 1 : Price == other.Price ? 0 : -1;
+
+    public override string ToString() 
+        => $"{SerialNumber}\n" + 
+           $"-- {Item.Name} - {Item.Price:c2}: {Quantity}\n" +
+           $"-- {Price:c2}";
+}

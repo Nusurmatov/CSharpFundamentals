@@ -1,0 +1,124 @@
+// Problem 1 - Data Time Finder:
+var input = Console.ReadLine() ?? string.Empty;
+
+while (input != "END")
+{
+    if (bool.TryParse(input, out _))
+    {
+        Console.WriteLine($"{input} is boolean type");
+    }
+    else if (int.TryParse(input, out _))
+    {
+        Console.WriteLine($"{input} is integer type");
+    }
+    else if (input.ToCharArray().All(c => (c > 47 && c < 58 || c == 46 || c == 45)))
+    {
+        Console.WriteLine($"{input} is floating point type");
+    }
+    else if (input.Length == 1)
+    {
+        Console.WriteLine($"{input} is character type");
+    }
+    else
+    {
+        Console.WriteLine($"{input} is string type");
+    }
+
+    input = Console.ReadLine() ?? string.Empty;
+}
+
+
+// Problem 2 - From Left to Right:
+byte n = byte.Parse(Console.ReadLine());
+
+for (int i = 0; i < n; i++)
+{
+    string input = Console.ReadLine();
+    
+    long[] numbers = input.Split(' ').Select(long.Parse).ToArray();
+    Console.WriteLine(numbers[0] > numbers[1] ? SumOfDigits(numbers[0]) : SumOfDigits(numbers[1]));
+    
+}
+
+long SumOfDigits(long number)
+{
+    number = Math.Abs(number);
+    long sum = 0;
+    while (number > 0)
+    {
+        sum += number % 10;
+        number /= 10;
+    }
+
+    return sum;
+}
+
+
+// Problem 3 - Floating Equality:
+const double eps = 0.000001;
+double a = double.Parse(Console.ReadLine());
+double b = double.Parse(Console.ReadLine());
+
+Console.WriteLine(Math.Abs(a - b) < eps);
+
+
+// Problem 4 - Refactoring Prime Checker:
+int number = int.Parse(Console.ReadLine());
+for (int i = 2; i <= number; i++)
+{
+    bool isPrime = true;
+    for (int j = 2; j < i; j++)
+    {
+        if (i % j == 0)
+        {
+            isPrime = false;
+            break;
+        }
+    }
+    Console.WriteLine($"{i} -> {isPrime.ToString().ToLower()}");
+}
+
+// Problem 5 - Dycrypting Messages:
+int key = int.Parse(Console.ReadLine());
+int numberOfLines = int.Parse(Console.ReadLine());
+var strintBuilder = new System.Text.StringBuilder();
+
+for (int i = 0; i < numberOfLines; i++)
+{
+    strintBuilder.Append((char)(Convert.ToChar(Console.ReadLine()) + key));
+}
+
+Console.WriteLine(strintBuilder);
+
+
+// Problem 6 - Balanced Brackets:
+int n = int.Parse(Console.ReadLine());
+bool isBalanced = true;
+Stack<int> stack = new Stack<int>();
+
+for (int i = 0; i < n; i++)
+{
+    string input = Console.ReadLine();
+    if (input == "(")
+    {
+        stack.Push(i);
+    }
+    else if(input == ")")
+    {
+        if (stack.Count == 0)
+        {
+            isBalanced = false;
+        } 
+        else
+        {
+            stack.Pop();
+        }      
+    }
+}
+
+if (stack.Count != 0)
+{
+    isBalanced = false;
+}
+
+Console.WriteLine(isBalanced ? "BALANCED" : "UNBALANCED");

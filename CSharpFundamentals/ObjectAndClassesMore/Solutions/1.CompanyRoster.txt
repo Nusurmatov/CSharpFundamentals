@@ -1,0 +1,54 @@
+// Problem 1 - Company Roster:
+int n = Convert.ToInt32(Console.ReadLine());
+
+List<Employee> employees = new();
+var sum = new Dictionary<string, double>();
+var count = new Dictionary<string, int>();
+while (n-- > 0)
+{
+    employees.Add(new Employee(Console.ReadLine().Split()));
+    if (count.ContainsKey(employees[^1].Department))
+    {
+        count[employees[^1].Department]++;
+        sum[employees[^1].Department] += employees[^1].Salary;
+    }
+    else
+    {
+        count[employees[^1].Department] = 1;
+        sum[employees[^1].Department] = employees[^1].Salary;
+    }
+}
+
+double maxDepartmentAverageSalary = 0;
+string theDepartment = string.Empty;
+foreach (var department in sum)
+{
+    double current = sum[department.Key] / count[department.Key];
+    if (maxDepartmentAverageSalary < current)
+    {
+        maxDepartmentAverageSalary = current;
+        theDepartment = department.Key;
+    }
+}
+
+Console.WriteLine($"Highest Average Salary: {theDepartment}");
+employees.Where(employee => employee.Department.Equals(theDepartment))
+    .OrderByDescending(employee => employee.Salary)
+    .ToList()
+    .ForEach(employee => Console.WriteLine(employee));
+
+class Employee
+{
+    public string Name { get; set; }
+    public double Salary { get; set; }  
+    public string Department { get; set; }
+
+    public Employee(string[] employee)
+    {
+        this.Name = employee[0];
+        this.Salary = double.Parse(employee[1]);
+        this.Department = employee[2];
+    }
+
+    public override string ToString() => $"{this.Name} {this.Salary:f2}";
+}

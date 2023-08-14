@@ -1,0 +1,57 @@
+// Problem 7 - List Manipulation Advanced:
+var nums = Console.ReadLine().Split().Select(int.Parse).ToList();
+var tokens = Console.ReadLine().Split().ToList();
+bool isListChanged = false;
+
+while (tokens[0] != "end")
+{
+    switch (tokens[0])
+    {
+        case "Add":
+            nums.Add(int.Parse(tokens[1]));
+            isListChanged = true;
+            break;
+        case "Insert":
+            nums.Insert(int.Parse(tokens[2]), int.Parse(tokens[1]));
+            isListChanged = true;
+            break;
+        case "Remove":
+            nums.Remove(int.Parse(tokens[1]));
+            isListChanged = true;
+            break;
+        case "RemoveAt":
+            isListChanged = true;
+            nums.RemoveAt(int.Parse(tokens[1]));
+            break;
+        case "Contains":
+            Console.WriteLine(nums.Contains(int.Parse(tokens[1])) ? "Yes" : "No such number");
+            break;
+        case "PrintEven":
+            Console.WriteLine(string.Join(' ', nums.Where(n => n % 2 == 0)));
+            break;
+        case "PrintOdd":
+            Console.WriteLine(string.Join(' ', nums.Where(n => n % 2 == 1)));
+            break;
+        case "GetSum":
+            Console.WriteLine(nums.Sum());
+            break;
+        case "Filter":
+            Console.WriteLine(string.Join(' ', GetFilteredList(condition: tokens[1], num: int.Parse(tokens[2]))));
+            break;
+    }
+
+    tokens = Console.ReadLine().Split().ToList();
+}
+
+IEnumerable<int> GetFilteredList(string condition, int num) => condition switch
+{
+    "<" => nums.Where(n => n < num),
+    "<=" => nums.Where(n => n <= num),
+    ">=" => nums.Where(n => n >= num),
+    _ => nums.Where(n => n > num)
+};
+
+if (isListChanged)
+{
+    Console.Write(string.Join(' ', nums));
+}

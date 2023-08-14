@@ -1,0 +1,38 @@
+// Problem 2 - Car Race:
+var times = Console.ReadLine().Split().Select(int.Parse).ToList();
+
+double sumLeft = 0;
+for (int i = 0; i < times.Count / 2; i++)
+{
+    if (times[i] == 0)
+    {
+        sumLeft *= 0.8;
+    }
+    else
+    {
+        sumLeft += times[i];
+    }
+}
+
+double sumRight = 0;
+for (int i = times.Count - 1; i > times.Count / 2; i--)
+{
+    if (times[i] == 0)
+    {
+        sumRight *= 0.8;
+    }
+    else
+    {
+        sumRight += times[i];
+    }
+}
+
+
+if (sumLeft > sumRight)
+{
+    Console.Write($"The winner is right with total time: {sumRight}");
+}
+else
+{
+    Console.Write($"The winner is left with total time: {sumLeft}");
+}

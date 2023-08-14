@@ -1,0 +1,10 @@
+// Problem 1 - Randomize Words:
+var words = Console.ReadLine().Split().ToArray();
+
+var randomizer = new Random();
+for (int i = 0; i < words.Length; i++)
+{
+    int randomIndex = randomizer.Next(words.Length);
+    (words[i], words[randomIndex]) = (words[randomIndex], words[i]);
+}
+Console.Write(string.Join("\n", words));

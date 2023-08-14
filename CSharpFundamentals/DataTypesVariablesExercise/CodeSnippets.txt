@@ -1,0 +1,177 @@
+// Problem 1: Integer Operations:
+
+int[] nums = new int[4];
+for (int i = 0; i < 4; i++)
+{
+    nums[i] = Convert.ToInt32(Console.ReadLine()); 
+}
+
+Console.Write((int)((nums[0] + nums[1]) / nums[2]) * nums[3]);
+
+
+// Problem 2: Sum digits:
+
+var input = Console.ReadLine();
+Console.Write(input?.Sum(c => (int)c - 48));
+
+
+// Problem 3: Elevator:
+
+float numberOfPeople = Convert.ToSingle(Console.ReadLine());
+float capacity = Convert.ToSingle(Console.ReadLine());
+
+Console.Write((int)Math.Ceiling(numberOfPeople/capacity));
+
+
+// Problem 4: Sum of Chars
+
+byte n = Convert.ToByte(Console.ReadLine());
+short sum = 0;
+for (byte i = 0; i < n; i++)
+{
+    sum += (short)Console.ReadLine().First();
+}
+
+Console.Write("The sum equals: {0}", sum); '
+
+
+// Problem 5: Part of ASCII Table:
+
+int startIndex = Convert.ToInt32(Console.ReadLine());
+int endIndex = Convert.ToInt32(Console.ReadLine());
+
+for (int i = startIndex; i <= endIndex; i++)
+{
+    Console.Write($"{(char)i} ");
+}
+
+
+// Problem 6: Triples of Latin Letters:
+
+int n = Convert.ToInt32(Console.ReadLine());
+for (int i = 0; i < n; i++)
+{
+    for (int j = 0; j < n; j++)
+    {
+        for (int k = 0; k < n; k++)
+        {
+            Console.WriteLine($"{(char)(i+97)}{(char)(j+97)}{(char)(k+97)}");  // 97 = 'a' in ASCII
+        }
+    }
+}
+
+
+// Problem 7 - Water Overflow
+
+short n = Convert.ToInt16(Console.ReadLine());
+short currentQuantity = 0;
+for (short i = 0; i < n; i++)
+{
+    short liters = Convert.ToInt16(Console.ReadLine());
+    if (currentQuantity + liters > 255)
+    {
+        Console.WriteLine("Insufficient capacity!");
+    }
+    else
+    {
+        currentQuantity += liters;
+    }
+}
+
+Console.Write(currentQuantity);
+
+
+// Problem 8 - Model Kegs:
+
+byte n = Convert.ToByte(Console.ReadLine());
+var kegs = new Keg[n];
+for (int i = 0; i < n; i++)
+{
+    kegs[i] = new Keg
+    (
+        Model: Console.ReadLine(),
+        Radious: Convert.ToDouble(Console.ReadLine()),
+        Height: Convert.ToInt32(Console.ReadLine())
+    );
+}
+Console.Write(kegs.MaxBy(keg => Math.PI * Math.Pow(keg.Radious, 2) * keg.Height)?.Model);
+
+
+record Keg(string? Model, double Radious, int Height);
+
+
+// Problem 9 - Spice Must Flow:
+
+long yield = Convert.ToInt64(Console.ReadLine());
+long source = 0;
+int day = 0;
+
+if (yield >= 100)
+{
+    for (; yield >= 100; day++)
+    {
+        source += yield;
+        yield -= 10;
+    }
+    source -= (day + 1) * 26;
+}
+
+Console.WriteLine(day);
+Console.WriteLine(source);
+
+
+// Problem 10 - Poke Mon:
+
+int n = int.Parse(Console.ReadLine());
+int m = int.Parse(Console.ReadLine());
+int y = int.Parse(Console.ReadLine());
+int startPower = n;
+int pokeCounter = 0;
+
+if (y != 0 && n % 2 == 0 && n % m == 0)
+{
+    pokeCounter = (n / 2 / m) + (n / 2 / y / m);
+    n = (n / 2 / y) % m;
+}
+else
+{
+    pokeCounter = n / m;
+    n %= m;
+}
+
+Console.WriteLine(n);
+Console.Write(pokeCounter);
+
+
+// Problem 11 - Snowballs:
+
+using System.Numerics;
+
+int n = Convert.ToInt32(Console.ReadLine());
+var snowballs = new List<SnowBall>();
+
+for (int i = 0; i < n; i++)
+{
+    int snowballSnow = Convert.ToInt32(Console.ReadLine());
+    int snowballTime = Convert.ToInt32(Console.ReadLine());
+    int snowballQuality = Convert.ToInt32(Console.ReadLine());
+    BigInteger snowballValue = Pow(snowballSnow / snowballTime, snowballQuality);
+    var snowball = new SnowBall(snowballSnow, snowballTime, snowballQuality, snowballValue); 
+
+    snowballs.Add(snowball);
+}
+var maxSnowBall = snowballs.MaxBy(s => s.snowballValue);
+Console.WriteLine($"{maxSnowBall.snowballSnow} : {maxSnowBall.snowballTime} = {maxSnowBall.snowballValue} ({maxSnowBall.snowballQuality})");
+
+BigInteger Pow(int n, int power)
+{
+    BigInteger result = 1;
+    for (int i = 0; i < power; i++)
+    {
+        result *= n;
+    }
+
+    return result;
+}
+
+record SnowBall(int snowballSnow, int snowballTime, int snowballQuality, BigInteger snowballValue);

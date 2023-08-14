@@ -1,0 +1,15 @@
+// Problem 5 - Bomb Numbers:
+var numbers = ReadList();
+var bombAndPower = ReadList();
+
+while (numbers.Contains(bombAndPower[0]))
+{
+    int index = numbers.IndexOf(bombAndPower[0]);
+    int startIndex = index - bombAndPower[1] >= 0 ? index - bombAndPower[1] : 0;
+    int bombCapacity = bombAndPower[1] * 2 + 1;
+    int count =  bombCapacity <= numbers.Count - startIndex ? bombCapacity : numbers.Count - startIndex;
+    numbers.RemoveRange(startIndex, count);    
+}
+Console.Write(numbers.Count > 0 ? numbers.Sum() : 0);
+
+List<int> ReadList() => Console.ReadLine().Split().Select(int.Parse).ToList();

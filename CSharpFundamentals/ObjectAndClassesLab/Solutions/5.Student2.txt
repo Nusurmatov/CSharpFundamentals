@@ -1,0 +1,59 @@
+// Problem 5 - Student 2.0:
+var input = Console.ReadLine();
+
+List<Student> students = new();
+while (input != "end")
+{
+    var tokens = input.Split();
+    Student student = new() {
+            FirstName = tokens[0],
+            LastName = tokens[1],
+            Age = int.Parse(tokens[2]),
+            Hometown = tokens[3]
+        };
+    
+    if (students.Contains(student))
+    {
+        var index = students.IndexOf(student);
+        students[index] = student;    
+    }
+    else
+    {
+        students.Add(student);
+    }
+
+    input = Console.ReadLine();
+}
+var city = Console.ReadLine();
+var studentsFromTheCity = students.Where(student => student.Hometown.Equals(city)).ToList();
+studentsFromTheCity.ForEach(student => 
+    Console.WriteLine($"{student.FirstName} {student.LastName} is {student.Age} years old."));
+
+class Student
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public int Age { get; set; }
+    public string Hometown { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        var other = obj as Student;
+
+        return FirstName == other?.FirstName &&
+               LastName == other.LastName;
+    }
+
+    public override int GetHashCode()
+    {
+        const int prime = 31;
+        int result = 1;
+
+        result = prime * result + ((FirstName == null) ? 0 : FirstName.GetHashCode());
+        result = prime * result + ((LastName == null) ? 0 : LastName.GetHashCode());
+        result = prime * result + ((Hometown == null) ? 0 : Hometown.GetHashCode());
+        result = prime * result + Age;
+
+        return result;
+    }
+}

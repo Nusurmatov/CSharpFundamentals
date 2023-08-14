@@ -1,0 +1,24 @@
+// Problem 6 - Cards Game:
+var deck1 = ReadList();
+var deck2 = ReadList();
+
+while (deck1.Count > 0 && deck2.Count > 0)
+{
+    if (deck1[0] > deck2[0])
+    {
+        deck1.Add(deck1[0]);
+        deck1.Add(deck2[0]);
+    }
+    else if (deck1[0] < deck2[0])
+    {
+        deck2.Add(deck2[0]);
+        deck2.Add(deck1[0]);
+    }
+
+    deck1.Remove(deck1[0]);
+    deck2.Remove(deck2[0]);
+}
+Console.Write("{0} player wins! Sum: {1}", deck1.Count == 0 ? "Second" : "First", 
+                                           deck1.Count == 0 ? deck2.Sum() : deck1.Sum());
+
+List<int> ReadList() => Console.ReadLine().Split().Select(int.Parse).ToList();

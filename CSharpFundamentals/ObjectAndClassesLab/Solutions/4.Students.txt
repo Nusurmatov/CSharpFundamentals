@@ -1,0 +1,22 @@
+// Problem 4 - Students:
+var input = Console.ReadLine();
+
+List<Student> students = new();
+while (input != "end")
+{
+    var student = input.Split();
+    students.Add(new(
+        firstName: student[0],
+        lastName: student[1],
+        age: int.Parse(student[2]),
+        hometown: student[3]
+    ));
+
+    input = Console.ReadLine();
+}
+var city = Console.ReadLine();
+var studentsFromTheCity = students.Where(student => student.hometown.Equals(city)).ToList();
+studentsFromTheCity.ForEach(student => 
+    Console.WriteLine($"{student.firstName} {student.lastName} is {student.age} years old."));
+
+record Student(string firstName, string lastName, int age, string hometown);

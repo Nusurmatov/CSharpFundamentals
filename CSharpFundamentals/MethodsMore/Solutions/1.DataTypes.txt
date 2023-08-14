@@ -1,0 +1,19 @@
+// Problem 1 - Data Types:
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var type = Console.ReadLine();
+        var input = Console.ReadLine();
+        switch (type)
+        {
+            case "int": Print(int.Parse(input)); break;
+            case "real": Print(double.Parse(input)); break;
+            default: Print(input); break;
+        }
+    }
+
+    static void Print(double num) => Console.Write("{0:f2}", 1.5 * num);
+    static void Print(int num) => Console.Write(2 * num);
+    static void Print(string? str) => Console.Write($"${str}$");
+}

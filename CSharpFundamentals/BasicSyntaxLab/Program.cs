@@ -1,0 +1,14 @@
+﻿Console.Clear();
+// Solutions.RunStudentInfoPro1();
+// Solutions.RunPassedPro2();
+// Solutions.RunPassedOrFailedPro3();
+// Solutions.RunBackInThirtyMinsPro4();
+// Solutions.RunMonthPrinterPro5();
+// Solutions.RunForeignLanguagesPro6();
+// Solutions.RunTheatrePromotionsPro7();
+// Solutions.RunDivisibleByThreePro8();
+// Solutions.RunSumOfOddNumbersPro9();
+// Solutions.RunMultiplicationTablePro10();
+// Solutions.RunMultiplicationTable2Pro11();
+// Solutions.RunEvenNumberPro12();
+Solutions.RunHolidaysBetweenTwoDaysPro13();

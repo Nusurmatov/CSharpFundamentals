@@ -1,0 +1,27 @@
+// Problem 3 - Articles 2.0:
+int n = Convert.ToInt32(Console.ReadLine());
+
+List<Article> articles = new();
+while (n-- > 0)
+{
+    articles.Add(new (article: Console.ReadLine().Split(", ")));
+}
+articles.ForEach(article => Console.WriteLine(article));
+
+class Article
+{
+    public string Title { get; set; }
+    public string Content { get; set; } 
+    public string Author { get; set; }
+
+    public Article(string[] article) : this(article[0], article[1], article[2]) { }
+
+    public Article(string title, string content, string author)
+    {
+        this.Title = title;
+        this.Content = content;
+        this.Author = author;
+    }
+
+    public override string ToString() => $"{this.Title} - {this.Content}: {this.Author}";
+}

@@ -1,0 +1,282 @@
+// Problem 1 - Train: 
+int n = Convert.ToInt32(Console.ReadLine());
+int[] peopleInWagos = new int[n];
+int sum = 0;
+
+for (int i = 0; i < n; i++)
+{
+    peopleInWagos[i] = Convert.ToInt32(Console.ReadLine());
+    sum += peopleInWagos[i];
+}
+
+Console.WriteLine(string.Join(' ', peopleInWagos));
+Console.WriteLine(sum);
+
+
+// Problem 2 - Common Elements: 
+var arr1 = Console.ReadLine().Split();
+var arr2 = Console.ReadLine().Split();
+var arr3 = arr1.Intersect(arr2).ToArray();
+
+Array.ForEach(arr3, element => Console.Write($"{element} "));
+
+
+// Problem 3 - Zig-zag arrays: 
+int n = Convert.ToInt32(Console.ReadLine());
+int[] arr1 = new int[n];
+int[] arr2 = new int[n];
+
+for (int i = 0; i < n; i++)
+{
+    var input = Console.ReadLine().Split().Select(int.Parse).ToArray();
+    arr1[i] = (i % 2 == 0) ? input[0] : input[1]; 
+    arr2[i] = (i % 2 == 1) ? input[0] : input[1]; 
+}
+
+Console.WriteLine(string.Join(' ', arr1));
+Console.WriteLine(string.Join(' ', arr2));
+
+
+// Problem 4 - Array Rotation: 
+int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+int n = Convert.ToInt32(Console.ReadLine());
+n %= numbers.Length;
+
+int[] rotatedNumbers = new int[numbers.Length];
+Array.Copy(numbers, 0, rotatedNumbers, numbers.Length - n, n);
+Array.Copy(numbers, n, rotatedNumbers, 0, numbers.Length - n);
+
+Console.WriteLine(string.Join(' ', rotatedNumbers));
+
+
+// Problem 5 - Top Integers: 
+int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+bool isTopInteger = true;
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    for (int j = i + 1; j < numbers.Length; j++)
+    {
+        if (numbers[i] <= numbers[j])
+        {
+            isTopInteger = false;
+            break;
+        }
+    }
+
+    if (isTopInteger)
+    {
+        Console.Write($"{numbers[i]} ");
+    }
+    else
+    {
+        isTopInteger = true;
+    }
+}
+
+
+// Problem 6 - Equal Sums
+int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+bool isSumEqual = true;
+
+if (numbers.Length == 1)
+{
+    Console.Write(0);
+    isSumEqual = false;
+}
+else
+{
+    for (int i = 0; i < numbers.Length; i++)
+    {
+        if (Sum(0, i) == Sum(i+1, numbers.Length))
+        {
+            Console.Write(i);
+            isSumEqual = false;
+            break;
+        }
+    }
+}
+
+if (isSumEqual)
+{
+    Console.Write("no");
+}
+
+int Sum(int startIndex, int endIndex)
+{
+    int result = 0;
+    for (int i = startIndex; i < endIndex; i++)
+    {
+        result += numbers[i];
+    }
+
+    return result;
+}
+
+
+// Problem 7 - Max Sequence of Equal Elements
+int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+int startIndex = 0, currentIndex = 0;
+int count = 1, maxCount = 0;
+
+for (int i = 0; i < numbers.Length - 1; i++)
+{
+    if (numbers[i] == numbers[i+1])
+    {
+        count++;
+    }
+    else
+    {
+      currentIndex = i + 1;
+      count = 1;
+    }
+
+    if (maxCount < count)
+    {
+        startIndex = currentIndex;
+        maxCount = count;
+    }
+}
+
+Console.Write(string.Join(' ', numbers[startIndex..(startIndex + maxCount)]));
+
+
+// Problem 8 - Magic Sum
+int[] numbers = Console.ReadLine().Split().Distinct().Select(int.Parse).ToArray();
+int n = Convert.ToInt32(Console.ReadLine());
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    for (int j = i + 1; j < numbers.Length; j++)
+    {
+        if (numbers[i] + numbers[j] == n)
+        {
+            Console.WriteLine($"{numbers[i]} {numbers[j]}");
+        }
+    }
+}
+
+
+// Problem 9 - Kamino Factory: 
+int n = Convert.ToInt32(Console.ReadLine());
+string input = Console.ReadLine();
+int[] sequence = new int[n];
+(int bestSample, int startIndex, int count, int sum) bestDnaSample = (1, 0, 0, 0);
+int counter = 1;
+
+while (input.Trim() != "Clone them!")
+{
+    sequence = GetSampleSequence();
+    var sample = GetSample(sequence);
+    if (sample.count == bestDnaSample.count)
+    {
+        if (sample.startIndex < bestDnaSample.startIndex || sequence.Sum() > bestDnaSample.sum)
+        {
+            bestDnaSample = (counter, sample.startIndex, sample.count, sequence.Sum());
+        }
+    }
+    else if (sample.count > bestDnaSample.count)
+    {
+        bestDnaSample = (counter, sample.startIndex, sample.count, sequence.Sum());
+    }
+
+    counter++;
+    input = Console.ReadLine();
+}
+
+Console.WriteLine($"Best DNA sample {bestDnaSample.bestSample} with sum: {bestDnaSample.sum}.");
+Console.Write(string.Join(' ', sequence));
+
+int[] GetSampleSequence()
+{
+    int[] result = new int[n];
+    for (int i = 0, j = 0; i < input.Length; i++)
+    {
+        if (input[i] == '0' || input[i] == '1')
+        {
+            result[j] = input[i] - 48; j++;
+        }
+    }
+
+    return result;
+}
+
+(int startIndex, int count) GetSample(int[] sequence)
+{
+    (int currentIndex, int startIndex, int count, int maxCount) sample = (0, 0, 1, 0);
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (sequence[i] == 1 && sequence[i] == sequence[i+1])
+        {
+            sample.count++;
+        }
+        else
+        {
+            sample.currentIndex = i + 1;
+            sample.count = 1;
+        }
+
+        if (sample.maxCount < sample.count)
+        {
+            sample.startIndex = sample.currentIndex;
+            sample.maxCount = sample.count;
+        }
+    }
+
+    return (sample.startIndex, sample.maxCount);
+}
+
+
+// Problem 10 - Ladybugs
+int fieldSize = Convert.ToInt32(Console.ReadLine());
+int[] field = new int[fieldSize]; 
+int[] ladyBugsPosition = Console.ReadLine().Split().Select(int.Parse).ToArray();
+var input = Console.ReadLine();
+
+// add ladybugs to fields
+for (int i = 0; i < ladyBugsPosition.Length; i++)
+{
+    if (ladyBugsPosition[i] >= 0 && ladyBugsPosition[i] < fieldSize)
+    {
+        field[ladyBugsPosition[i]] = 1;
+    }
+}
+
+// receive commands
+while (input.Trim() != "end")
+{
+    var separatedCommand = input.Split();
+    var command = new Command(
+        position: int.Parse(separatedCommand[0]),
+        direction: separatedCommand[1][0],
+        length: int.Parse(separatedCommand[2])
+    );
+
+    MoveLadbug(command);
+    input = Console.ReadLine(); 
+}
+Console.Write(string.Join(' ', field));
+
+void MoveLadbug(Command command)
+{
+    if (command.position >= 0 && command.position < fieldSize && field[command.position] == 1)
+    {
+        field[command.position] = 0;
+        int newPosition = 0; newPosition += command.direction == 'r' ? command.position + command.length : command.position -command.length;
+        while (newPosition < fieldSize && newPosition >= 0)
+        {
+            if (field[newPosition] == 0)
+            {
+                field[newPosition] = 1;
+                break;
+            }
+            else
+            {
+                newPosition += command.direction == 'r' ? command.length : -command.length;
+            }
+        }
+    }
+}
+
+record Command(int position, char direction, int length); 

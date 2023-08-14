@@ -1,0 +1,23 @@
+// Problem 3 - Merging Lists:
+var list1 = ReadDoubleList();
+var list2 = ReadDoubleList();
+List<double> result = new();
+
+int length = Math.Min(list1.Count, list2.Count);
+for (int i = 0; i < length; i++)
+{
+    result.Add(list1[i]);
+    result.Add(list2[i]);
+}
+
+if (list1.Count > list2.Count)
+{
+    result.AddRange(list1.Skip(list2.Count));    
+}
+else if (list1.Count < list2.Count)
+{
+    result.AddRange(list2.Skip(list1.Count));    
+}
+Console.Write(string.Join(' ', result));
+
+List<double> ReadDoubleList() => Console.ReadLine().Split().Select(double.Parse).ToList();

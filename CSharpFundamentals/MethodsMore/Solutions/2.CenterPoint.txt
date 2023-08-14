@@ -1,0 +1,21 @@
+// Problem 2 - Center Point:
+var point1 = new Point(ReadDouble(), ReadDouble());
+var point2 = new Point(ReadDouble(), ReadDouble());
+Console.Write(point1.DistanceBetweenCenterPoint > point2.DistanceBetweenCenterPoint ? point2 : point1);
+
+double ReadDouble() => Convert.ToDouble(Console.ReadLine());
+struct Point
+{
+    public double X { get; set; }
+    public double Y { get; set; }
+
+    public Point(double x, double y)
+    {
+        this.X = x;
+        this.Y = y;
+    }
+
+    public double DistanceBetweenCenterPoint => Math.Sqrt(X*X + Y*Y);
+
+    public override string ToString() => $"({X}, {Y})";
+}

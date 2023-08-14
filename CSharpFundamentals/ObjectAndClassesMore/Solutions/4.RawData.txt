@@ -1,0 +1,44 @@
+// Problem 4 - Raw Data:
+int n = Convert.ToInt32(Console.ReadLine());
+
+List<Car> courierCompany = new();
+while (n-- > 0)
+{
+    var tokens = Console.ReadLine().Split();
+    var model = tokens[0];
+    var engine = new Engine(int.Parse(tokens[1]), int.Parse(tokens[2]));
+    var cargo = new Cargo(int.Parse(tokens[3]), tokens[4]);
+    courierCompany.Add(new (model, engine, cargo));
+}
+
+var cargoType = Console.ReadLine();
+if (cargoType == "fragile")
+{
+    courierCompany.FindAll(car => car.Cargo.Type.Equals(cargoType) && car.Cargo.Weight < 1000)
+        .ForEach(car => Console.WriteLine(car));
+}
+else
+{
+    courierCompany.FindAll(car => car.Cargo.Type.Equals(cargoType) && car.Engine.Power > 250)
+        .ForEach(car => Console.WriteLine(car));
+}
+
+class Car
+{
+    public string Model { get; set; }
+    public Engine Engine { get; set; }
+    public Cargo Cargo { get; set; }
+
+    public Car(string model, Engine engine, Cargo cargo)
+    {
+        this.Model = model;
+        this.Engine = engine;
+        this.Cargo = cargo;
+    }
+
+    public override string ToString() => $"{this.Model}";
+}
+
+record Engine(int Speed, int Power);
+
+record Cargo(int Weight, string Type);

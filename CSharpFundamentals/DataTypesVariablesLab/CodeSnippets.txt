@@ -1,0 +1,130 @@
+// Problem 1 - Convert Meters to Kilometers with 2 decimal point precision: 
+double meter = Convert.ToDouble(Console.ReadLine());
+Console.WriteLine($"{(meter/1000):N2}");
+
+
+// Problem 2 - Pounds to Dollars: 
+double meter = Convert.ToDouble(Console.ReadLine());
+Console.WriteLine($"{(meter*1.31):N3}");
+
+
+// Problem 3 - Exact Sum of Real Numbers:
+int n = Convert.ToInt32(Console.ReadLine());
+decimal[] nums = new decimal[n];
+
+for (int i = 0; i < n; i++)
+{
+    nums[i] = Convert.ToDecimal(Console.ReadLine());
+}
+
+Console.WriteLine(nums.Sum());
+
+
+// Problem 4 - Centuaries to Minutes:
+const double solarYear = 365.2422;
+int n = Convert.ToInt32(Console.ReadLine());
+int days = (int)(n * 100 * solarYear ); 
+long hours = days * 24;
+long minutes = hours * 60;
+
+Console.Write($"{n} centuries = {n * 100} years = {days} days = {hours} hours = {minutes} minutes");
+
+
+// Problem 5 - Special Numbers. A number is special when its sum of digits is 5, 7 or 11.
+int n = Convert.ToInt32(Console.ReadLine());
+
+for (int i = 1; i <= n; i++)
+{
+    Console.WriteLine($"{i} -> {isSpecial(i)}");
+}
+
+bool isSpecial(int number)
+{
+    int sum = 0;
+
+    while (number > 0)
+    {
+        sum += number % 10;
+        number /= 10;
+    }
+
+    return sum == 5 || sum == 7 || sum == 11;
+}
+
+
+// Problem 6 - Reversed Chars. Create a program that takes 3 lines of characters and prints them in reversed order with a space between them.
+var chars = new char[3];
+
+for (int i = 0; i < 3; i++)
+{
+    chars[i] = Convert.ToChar(Console.ReadLine());
+}
+
+for (int i = 2; i >= 0; i--)
+{
+    Console.Write($"{chars[i]} "); 
+}
+
+
+// Problem 7 - Concat Names. 
+var strs = new string[3];
+
+for (int i = 0; i < 3; i++)
+{
+    strs[i] = Console.ReadLine();
+}
+
+Console.WriteLine($"{strs[0]}{strs[2]}{strs[1]}");
+
+
+// Problem 8 - Town Info:
+string city = Console.ReadLine();
+int population = int.Parse(Console.ReadLine());
+int area = int.Parse(Console.ReadLine());
+
+Console.Write($"Town {city} has population of {population} and area {area} square km.");
+
+
+// Problem 9 - Chars to String:
+var strBuilder = new System.Text.StringBuilder();
+
+for (int i = 0; i < 3; i++)
+{
+    strBuilder.Append(Console.ReadLine());
+}
+
+Console.Write(strBuilder);
+
+
+// Problem 10 - Lower or Upper:
+int c = Console.Read();
+
+Console.Write((c > 64 && c < 91) ? "upper-case" : "lower-case");
+
+
+// Problem 11 - Refactor Volume of Pyramid:
+Console.Write("Length: ");
+double length = double.Parse(Console.ReadLine());
+Console.Write("Width: ");
+double width = double.Parse(Console.ReadLine());
+Console.Write("Height: ");
+double heigth = double.Parse(Console.ReadLine());
+double volume = length * width * heigth / 3;
+Console.Write($"Pyramid Volume: {volume:f2}");
+
+
+// Problem 12 - Refactor Special Numbers:
+int number = int.Parse(Console.ReadLine());
+for (int i = 1; i <= number; i++)
+{
+    int tempNumber = i;
+    int sumOfNumberDigits = 0;
+    while (tempNumber > 0)
+    {
+        sumOfNumberDigits += tempNumber % 10;
+        tempNumber = tempNumber / 10;
+    }
+    bool isSpecialNum = (sumOfNumberDigits == 5) || (sumOfNumberDigits == 7) || (sumOfNumberDigits == 11);
+    Console.WriteLine("{0} -> {1}", i, isSpecialNum);
+    sumOfNumberDigits = 0;
+}
